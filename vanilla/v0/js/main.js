@@ -15,7 +15,15 @@ submitBtn.addEventListener('click', (e) => {
   resetForm();
 });
 
-let library = [];
+// window.onload = function () {
+//   displayBooks();
+// };
+
+const storage = window.localStorage;
+let library = JSON.parse(storage.getItem('libraryApp') || '[]').map(
+  (book) => new Book(book.title, book.author, book.pages, book.read, book.id)
+);
+displayBooks();
 
 function Book(title, author, pages, read, id) {
   this.title = title;
@@ -46,11 +54,18 @@ function addBookToLibrary() {
   );
   library.push(book);
   displayBooks();
+  saveToLocalStorage();
+}
+
+function saveToLocalStorage() {
+  const lib = JSON.stringify(library);
+  storage.setItem('libraryApp', lib);
 }
 
 function deleteBookFromLibrary(id) {
   library = library.filter((book) => book.id !== id);
   displayBooks();
+  saveToLocalStorage();
 }
 
 function displayBooks() {
@@ -65,10 +80,13 @@ function displayBooks() {
     deleteBtn.addEventListener('click', function () {
       deleteBookFromLibrary(book.id);
     });
+
     toggleBtn.addEventListener('click', () => {
       book.toggle();
       displayBooks();
+      saveToLocalStorage();
     });
+
     app.appendChild(card);
   });
   return 'done';
