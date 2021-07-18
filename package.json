@@ -8,5 +8,17 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fccJashCoda/LibraryApp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fccJashCoda/LibraryApp/issues"
+  },
+  "homepage": "https://github.com/fccJashCoda/LibraryApp#readme",
+  "dependencies": {
+    "express-validator": "^6.12.0",
+    "uuid": "^8.3.2"
+  }
 }

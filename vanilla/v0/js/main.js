@@ -15,10 +15,6 @@ submitBtn.addEventListener('click', (e) => {
   resetForm();
 });
 
-// window.onload = function () {
-//   displayBooks();
-// };
-
 const storage = window.localStorage;
 let library = JSON.parse(storage.getItem('libraryApp') || '[]').map(
   (book) => new Book(book.title, book.author, book.pages, book.read, book.id)

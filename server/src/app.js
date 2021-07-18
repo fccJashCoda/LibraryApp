@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -6,7 +7,7 @@ const library = require('./library/v1/library.router');
 require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT || 5222;
+const db = process.env.MONGODB;
 
 app.use(cors());
 app.use(helmet());
@@ -38,4 +39,15 @@ function errorHandler(err, req, res, next) {
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+mongoose
+  .connect(db, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: true,
+    useUnifiedTopology: true,
+  })
+  .catch(() => {
+    throw new Error('Failed to connect to the database.');
+  });
+
+module.exports = app;
