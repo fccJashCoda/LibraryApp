@@ -43,7 +43,7 @@ mongoose
   .connect(db, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useFindAndModify: true,
+    useFindAndModify: false,
     useUnifiedTopology: true,
   })
   .catch(() => {
