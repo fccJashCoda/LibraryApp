@@ -7,12 +7,16 @@ const useForm = ({ initialValues }) => {
     const value = e.target.value;
     const name = e.target.name;
 
+    console.log(e.target);
+
     setValues({
       ...values,
       [name]: value,
     });
 
-    console.log(value);
+    console.log('value: ', value);
+    console.log('name: ', name);
+    console.log('values: ', values);
   };
 
   return {

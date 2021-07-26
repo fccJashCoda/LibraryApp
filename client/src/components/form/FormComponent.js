@@ -11,12 +11,24 @@ const FormComponent = () => {
       title: '',
       author: '',
       pages: 0,
-      read: 1,
+      read: 0,
     },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const payload = {
+      title: values.title,
+      author: values.author,
+      pages: values.pages,
+      read: values.read === '1' ? true : false,
+    };
+
+    console.log(values.read);
+
+    console.log(payload);
+    console.log(values);
 
     console.log('submitting form');
   };

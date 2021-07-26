@@ -2,12 +2,6 @@
 import { Input, Label } from 'reactstrap';
 
 const InputComponent = (props) => {
-  // const [value, setValue] = useState('');
-
-  // const handleChange = (e) => {
-  //   setValue(e.target.value);
-  // };
-
   return (
     <>
       <Label>{props.title}</Label>
@@ -17,6 +11,7 @@ const InputComponent = (props) => {
         type={props.type || 'text'}
         placeholder={props.placeholder || props.title.toLowerCase()}
         id={props.title.toLowerCase()}
+        name={props.title.toLowerCase()}
       />
     </>
   );

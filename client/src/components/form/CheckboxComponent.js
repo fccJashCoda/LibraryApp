@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { ButtonGroup, Button, Input } from 'reactstrap';
 
 const CheckboxComponent = (props) => {
-  const [rSelected, setRSelected] = useState(1);
+  const [rSelected, setRSelected] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
   const inputEl = useRef(null);
 
@@ -31,19 +31,12 @@ const CheckboxComponent = (props) => {
         <Button
           color='primary'
           onClick={() => {
-            setRSelected(2);
+            setRSelected(0);
           }}
         >
           No
         </Button>
-        <input readOnly value={rSelected} ref={inputEl} />
-        {/* <Input
-          // type='text'
-          readOnly
-          onChange={(e) => props.action(e)}
-          value={rSelected}
-          ref={inputEl}
-        /> */}
+        <input readOnly value={rSelected} ref={inputEl} name='read' />
       </ButtonGroup>
     </>
   );
