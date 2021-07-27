@@ -15,6 +15,7 @@ const schema = Joi.object({
 
 const FormComponent = (props) => {
   const [errorMessage, setErrorMessage] = useState('');
+  const [showing, setShowing] = useState(true);
   const { values, handleChange } = useForm({
     initialValues: {
       title: '',
@@ -31,6 +32,10 @@ const FormComponent = (props) => {
     }
 
     return false;
+  };
+
+  const toggle = () => {
+    setShowing(!showing);
   };
 
   const handleSubmit = (e) => {
@@ -56,30 +61,35 @@ const FormComponent = (props) => {
 
   return (
     <>
-      <Form>
-        <Container className='mt-2'>
-          <FormGroup>
-            <InputComponent title='Title' action={handleChange} />
-          </FormGroup>
-          <FormGroup>
-            <InputComponent title='Author' action={handleChange} />
-          </FormGroup>
-          <FormGroup>
-            <InputComponent
-              title='Pages'
-              placeholder='0'
-              type='number'
-              action={handleChange}
-            />
-          </FormGroup>
-          <FormGroup>
-            <CheckboxComponent action={handleChange} />
-          </FormGroup>
-          <FormGroup>
-            <Button onClick={handleSubmit}>Submit</Button>
-          </FormGroup>
-        </Container>
-      </Form>
+      {showing ? (
+        <Form>
+          <Container className='mt-2'>
+            <FormGroup>
+              <InputComponent title='Title' action={handleChange} />
+            </FormGroup>
+            <FormGroup>
+              <InputComponent title='Author' action={handleChange} />
+            </FormGroup>
+            <FormGroup>
+              <InputComponent
+                title='Pages'
+                placeholder='0'
+                type='number'
+                action={handleChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <CheckboxComponent action={handleChange} />
+            </FormGroup>
+            <FormGroup>
+              <Button onClick={handleSubmit}>Submit</Button>
+              <Button onClick={toggle}>Hide Form</Button>
+            </FormGroup>
+          </Container>
+        </Form>
+      ) : (
+        <Button onClick={toggle}>Add Book</Button>
+      )}
     </>
   );
 };

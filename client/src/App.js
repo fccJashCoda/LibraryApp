@@ -34,8 +34,6 @@ function App() {
       <main className='container mt-5'>
         <FormComponent action={handleSubmit} />
         <BookList books={bookList} />
-
-        <div className='app mt-5'>{/* <BookList /> */}</div>
       </main>
     </div>
   );
