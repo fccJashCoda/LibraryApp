@@ -63,29 +63,31 @@ const FormComponent = (props) => {
     <>
       {showing ? (
         <Form>
-          <Container className='mt-2'>
-            <FormGroup>
-              <InputComponent title='Title' action={handleChange} />
-            </FormGroup>
-            <FormGroup>
-              <InputComponent title='Author' action={handleChange} />
-            </FormGroup>
-            <FormGroup>
-              <InputComponent
-                title='Pages'
-                placeholder='0'
-                type='number'
-                action={handleChange}
-              />
-            </FormGroup>
-            <FormGroup>
-              <CheckboxComponent action={handleChange} />
-            </FormGroup>
-            <FormGroup>
-              <Button onClick={handleSubmit}>Submit</Button>
-              <Button onClick={toggle}>Hide Form</Button>
-            </FormGroup>
-          </Container>
+          <FormGroup className='mt-2'>
+            <InputComponent title='Title' action={handleChange} />
+          </FormGroup>
+          <FormGroup className='mt-2'>
+            <InputComponent title='Author' action={handleChange} />
+          </FormGroup>
+          <FormGroup className='mt-2'>
+            <InputComponent
+              title='Pages'
+              placeholder='0'
+              type='number'
+              action={handleChange}
+            />
+          </FormGroup>
+          <FormGroup className='mt-2'>
+            <CheckboxComponent action={handleChange} />
+          </FormGroup>
+          <FormGroup className='mt-2'>
+            <Button className='btn-success' onClick={handleSubmit}>
+              Submit
+            </Button>
+            <Button className='btn-info' onClick={toggle}>
+              Hide Form
+            </Button>
+          </FormGroup>
         </Form>
       ) : (
         <Button onClick={toggle}>Add Book</Button>

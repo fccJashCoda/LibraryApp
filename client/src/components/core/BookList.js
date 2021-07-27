@@ -1,3 +1,5 @@
+import { Button } from 'reactstrap';
+
 const BookList = (props) => {
   const books = [
     { title: 'Cats', author: 'Someone', pages: 111, read: true },
@@ -18,11 +20,17 @@ const BookList = (props) => {
   ];
 
   return (
-    <>
+    <div className='mt-5'>
       {props.books.map((book, i) => (
-        <p key={i}>{book.title}</p>
+        <>
+          <p key={i}>{book.title}</p>
+          <Button className='btn-info'>Edit</Button>
+          <Button className='btn-danger' onClick={() => props.deleteBook(i)}>
+            Delete
+          </Button>
+        </>
       ))}
-    </>
+    </div>
   );
 };
 
