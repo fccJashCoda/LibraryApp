@@ -26,8 +26,13 @@ function App() {
     { title: 'The red dot', author: 'Someone', pages: 111, read: true },
   ]);
 
-  const handleSubmit = (payload) => {
-    setBookList([payload, ...bookList]);
+  const handleSubmit = async (payload) => {
+    try {
+      const post = axios.post('http://localhost:5333/library/', payload);
+      setBookList([payload, ...bookList]);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const testFunction = async () => {
