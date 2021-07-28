@@ -23,9 +23,12 @@ const BookList = (props) => {
     <div className='mt-5'>
       {props.books.map((book, i) => (
         <>
-          <p key={i}>{book.title}</p>
+          <p key={book._id}>{book.title}</p>
           <Button className='btn-info'>Edit</Button>
-          <Button className='btn-danger' onClick={() => props.deleteBook(i)}>
+          <Button
+            className='btn-danger'
+            onClick={() => props.deleteBook(book._id)}
+          >
             Delete
           </Button>
         </>
