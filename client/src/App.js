@@ -32,9 +32,10 @@ function App() {
 
   const handleSubmit = async (payload) => {
     try {
-      const post = axios.post('http://localhost:5333/library/', payload);
-      console.log(post);
-      setBookList([payload, ...bookList]);
+      const {
+        data: { book },
+      } = await axios.post('http://localhost:5333/library/', payload);
+      setBookList([book, ...bookList]);
     } catch (error) {
       console.log(error);
     }
