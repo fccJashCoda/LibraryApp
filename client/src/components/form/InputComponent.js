@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import { Input, Label } from 'reactstrap';
 
 const InputComponent = (props) => {

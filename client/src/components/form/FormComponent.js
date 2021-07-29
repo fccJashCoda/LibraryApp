@@ -48,6 +48,8 @@ const FormComponent = (props) => {
       read: values.read === '1' ? true : false,
     };
 
+    console.log(payload);
+
     if (validatePayload(payload)) {
       console.log('payload is valid');
     } else {

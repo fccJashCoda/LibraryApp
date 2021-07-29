@@ -5,6 +5,7 @@ import FormComponent from './components/form/FormComponent';
 import BookList from './components/core/BookList';
 import axios from 'axios';
 import { Button, Spinner } from 'reactstrap';
+import { bool } from 'joi';
 
 const mockdb = [
   { title: 'Cats', author: 'Someone', pages: 111, read: true },
@@ -39,9 +40,21 @@ function App() {
     }
   };
 
-  const testFunction = async () => {
-    const payload = await axios.get('http://localhost:5333/library/');
-    setBookList(payload.data.books);
+  const toggleRead = async (id) => {
+    try {
+      const updatedList = await Promise.all(
+        bookList.map(async (book) => {
+          if (book._id === id) {
+            book.read = !book.read;
+            await axios.put(`http://localhost:5333/library/${id}`, book);
+          }
+          return book;
+        })
+      );
+      setBookList(updatedList);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const deleteBook = async (id) => {
@@ -72,12 +85,15 @@ function App() {
       <NavComponent />
 
       <main className='container mt-5'>
-        <Button onClick={testFunction}>Get Books</Button>
         <FormComponent action={handleSubmit} />
         {isLoading ? (
           <Spinner color='light' />
         ) : (
-          <BookList books={bookList} deleteBook={deleteBook} />
+          <BookList
+            books={bookList}
+            deleteBook={deleteBook}
+            toggleRead={toggleRead}
+          />
         )}
       </main>
     </div>
