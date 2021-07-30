@@ -3,9 +3,9 @@ import './App.css';
 import NavComponent from './components/nav/NavbarComponent';
 import FormComponent from './components/form/FormComponent';
 import BookList from './components/core/BookList';
+import InputComponent from './components/form/InputComponent';
 import axios from 'axios';
-import { Button, Spinner } from 'reactstrap';
-import { bool } from 'joi';
+import { Button, FormGroup, Form, Input, Spinner } from 'reactstrap';
 
 const mockdb = [
   { title: 'Cats', author: 'Someone', pages: 111, read: true },
@@ -28,7 +28,7 @@ const mockdb = [
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(true);
-  const [bookList, setBookList] = useState([...mockdb]);
+  const [bookList, setBookList] = useState([]);
 
   const handleSubmit = async (payload) => {
     try {
@@ -74,6 +74,7 @@ function App() {
   useEffect(() => {
     async function loadBooks() {
       const payload = await axios.get('http://localhost:5333/library/');
+      console.log(payload.data.books);
       setBookList(payload.data.books);
       setIsLoading(false);
     }

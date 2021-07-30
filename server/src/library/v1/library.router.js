@@ -36,8 +36,12 @@ router.post(
 );
 
 router.get('/', async (req, res, next) => {
-  const books = await Book.find();
-  res.json({ message: 'Not yet implemented - Get all books', books });
+  const books = await Book.find().sort({ created_at: -1 }).exec();
+
+  console.log(books);
+  res.json({ message: 'for the love of sort', books });
+  // const books = await Book.find().sort('created_at').exec();
+  // res.json({ message: 'Not yet implemented - Get all books', books });
 });
 
 router.get('/:id', async (req, res, next) => {
