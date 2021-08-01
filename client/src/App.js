@@ -3,9 +3,8 @@ import './App.css';
 import NavComponent from './components/nav/NavbarComponent';
 import FormComponent from './components/form/FormComponent';
 import BookList from './components/core/BookList';
-import InputComponent from './components/form/InputComponent';
 import axios from 'axios';
-import { Button, FormGroup, Form, Input, Spinner } from 'reactstrap';
+import { Spinner } from 'reactstrap';
 
 const mockdb = [
   { title: 'Cats', author: 'Someone', pages: 111, read: true },
@@ -38,6 +37,7 @@ function App() {
       setBookList([book, ...bookList]);
     } catch (error) {
       console.log(error);
+      setErrorMessage(error.message);
     }
   };
 
@@ -68,15 +68,22 @@ function App() {
       setBookList(newBookList);
     } catch (error) {
       console.log(error);
+      setErrorMessage(error.message);
     }
   };
 
   useEffect(() => {
     async function loadBooks() {
-      const payload = await axios.get('http://localhost:5333/library/');
-      console.log(payload.data.books);
-      setBookList(payload.data.books);
-      setIsLoading(false);
+      try {
+        const payload = await axios.get('http://localhost:5333/library/');
+        console.log(payload.data.books);
+        setBookList(payload.data.books);
+      } catch (err) {
+        setErrorMessage(err.message);
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
     }
     setIsLoading(true);
     loadBooks();
@@ -87,16 +94,15 @@ function App() {
       <NavComponent />
 
       <main className='container mt-5'>
-        <FormComponent action={handleSubmit} />
-        {isLoading ? (
-          <Spinner color='light' />
-        ) : (
-          <BookList
-            books={bookList}
-            deleteBook={deleteBook}
-            toggleRead={toggleRead}
-          />
-        )}
+        {errorMessage ? <>{errorMessage}</> : <></>}
+        <BookList
+          books={bookList}
+          deleteBook={deleteBook}
+          toggleRead={toggleRead}
+          isLoading={isLoading}
+        >
+          <FormComponent action={handleSubmit} />
+        </BookList>
       </main>
     </div>
   );

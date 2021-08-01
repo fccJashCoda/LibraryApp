@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Container, Form, FormGroup, Button } from 'reactstrap';
+import { Form, FormGroup, Button } from 'reactstrap';
 import InputComponent from './InputComponent';
 import CheckboxComponent from './CheckboxComponent';
 
@@ -15,7 +15,7 @@ const schema = Joi.object({
 
 const FormComponent = (props) => {
   const [errorMessage, setErrorMessage] = useState('');
-  const [showing, setShowing] = useState(true);
+  const [showing, setShowing] = useState(false);
   const { values, handleChange } = useForm({
     initialValues: {
       title: '',

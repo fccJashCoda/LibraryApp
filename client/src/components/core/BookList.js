@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button, FormGroup, Form, Input, Spinner } from 'reactstrap';
+import { Button, FormGroup, Form, Spinner } from 'reactstrap';
 import InputComponent from '../form/InputComponent';
 
 const BookList = (props) => {
@@ -21,8 +21,15 @@ const BookList = (props) => {
         </FormGroup>
       </Form>
 
-      {searchTerm
-        ? props.books
+      {props.children}
+
+      {props.isLoading ? (
+        <div>
+          <Spinner />
+        </div>
+      ) : props.books.length ? (
+        searchTerm ? (
+          props.books
             .filter((book) =>
               book.title.toLowerCase().includes(searchTerm.toLowerCase())
             )
@@ -44,7 +51,8 @@ const BookList = (props) => {
                 </Button>
               </div>
             ))
-        : props.books.map((book, i) => (
+        ) : (
+          props.books.map((book, i) => (
             <div key={book._id}>
               <p>{book.title}</p>
               <p>status: {book.read ? 'read' : 'not yet read'}</p>
@@ -61,26 +69,13 @@ const BookList = (props) => {
                 Delete
               </Button>
             </div>
-          ))}
-
-      {/* {props.books.map((book, i) => (
-        <div key={book._id}>
-          <p>{book.title}</p>
-          <p>status: {book.read ? 'read' : 'not yet read'}</p>
-          <Button
-            onClick={() => props.toggleRead(book._id)}
-            className='btn-info'
-          >
-            Toggle read
-          </Button>
-          <Button
-            className='btn-danger'
-            onClick={() => props.deleteBook(book._id)}
-          >
-            Delete
-          </Button>
-        </div>
-      ))} */}
+          ))
+        )
+      ) : (
+        <>
+          <p>No book in library.</p>
+        </>
+      )}
     </div>
   );
 };

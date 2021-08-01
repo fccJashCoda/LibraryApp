@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { ButtonGroup, Button, Input } from 'reactstrap';
+import { ButtonGroup, Button } from 'reactstrap';
 
 const CheckboxComponent = (props) => {
   const [rSelected, setRSelected] = useState(0);
@@ -36,7 +36,7 @@ const CheckboxComponent = (props) => {
         >
           No
         </Button>
-        <input readOnly value={rSelected} ref={inputEl} name='read' />
+        <input hidden readOnly value={rSelected} ref={inputEl} name='read' />
       </ButtonGroup>
     </>
   );
