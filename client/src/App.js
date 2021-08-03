@@ -4,7 +4,7 @@ import NavComponent from './components/nav/NavbarComponent';
 import FormComponent from './components/form/FormComponent';
 import BookList from './components/core/BookList';
 import axios from 'axios';
-import { Spinner } from 'reactstrap';
+import { Alert } from 'reactstrap';
 
 const mockdb = [
   { title: 'Cats', author: 'Someone', pages: 111, read: true },
@@ -26,7 +26,7 @@ const mockdb = [
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
   const [bookList, setBookList] = useState([]);
 
   const handleSubmit = async (payload) => {
@@ -39,6 +39,14 @@ function App() {
       console.log(error);
       setErrorMessage(error.message);
     }
+  };
+
+  const displayError = (error) => {
+    setErrorMessage(error);
+  };
+
+  const clearError = () => {
+    setErrorMessage('');
   };
 
   const toggleRead = async (id) => {
@@ -54,7 +62,7 @@ function App() {
       );
       setBookList(updatedList);
     } catch (err) {
-      console.log(err);
+      setErrorMessage(err.message);
     }
   };
 
@@ -94,14 +102,19 @@ function App() {
       <NavComponent />
 
       <main className='container mt-5'>
-        {errorMessage ? <>{errorMessage}</> : <></>}
         <BookList
           books={bookList}
           deleteBook={deleteBook}
           toggleRead={toggleRead}
           isLoading={isLoading}
+          clearError={clearError}
         >
-          <FormComponent action={handleSubmit} />
+          {errorMessage ? <Alert color='danger'>{errorMessage}</Alert> : <></>}
+          <FormComponent
+            action={handleSubmit}
+            displayError={displayError}
+            clearError={clearError}
+          />
         </BookList>
       </main>
     </div>

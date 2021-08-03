@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Button, FormGroup, Form, Spinner } from 'reactstrap';
+import { FormGroup, Form, Spinner } from 'reactstrap';
 import InputComponent from '../form/InputComponent';
+import Book from './Book';
 
 const BookList = (props) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -10,7 +11,7 @@ const BookList = (props) => {
   };
 
   useEffect(() => {
-    console.log(searchTerm);
+    props.clearError();
   }, [searchTerm]);
 
   return (
@@ -34,41 +35,21 @@ const BookList = (props) => {
               book.title.toLowerCase().includes(searchTerm.toLowerCase())
             )
             .map((book, i) => (
-              <div key={book._id}>
-                <p>{book.title}</p>
-                <p>status: {book.read ? 'read' : 'not yet read'}</p>
-                <Button
-                  onClick={() => props.toggleRead(book._id)}
-                  className='btn-info'
-                >
-                  Toggle read
-                </Button>
-                <Button
-                  className='btn-danger'
-                  onClick={() => props.deleteBook(book._id)}
-                >
-                  Delete
-                </Button>
-              </div>
+              <Book
+                key={book._id}
+                toggleRead={props.toggleRead}
+                deleteBook={props.deleteBook}
+                book={book}
+              />
             ))
         ) : (
           props.books.map((book, i) => (
-            <div key={book._id}>
-              <p>{book.title}</p>
-              <p>status: {book.read ? 'read' : 'not yet read'}</p>
-              <Button
-                onClick={() => props.toggleRead(book._id)}
-                className='btn-info'
-              >
-                Toggle read
-              </Button>
-              <Button
-                className='btn-danger'
-                onClick={() => props.deleteBook(book._id)}
-              >
-                Delete
-              </Button>
-            </div>
+            <Book
+              key={book._id}
+              toggleRead={props.toggleRead}
+              deleteBook={props.deleteBook}
+              book={book}
+            />
           ))
         )
       ) : (

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, FormGroup, Button } from 'reactstrap';
 import InputComponent from './InputComponent';
 import CheckboxComponent from './CheckboxComponent';
@@ -14,7 +14,6 @@ const schema = Joi.object({
 });
 
 const FormComponent = (props) => {
-  const [errorMessage, setErrorMessage] = useState('');
   const [showing, setShowing] = useState(false);
   const { values, handleChange } = useForm({
     initialValues: {
@@ -25,11 +24,17 @@ const FormComponent = (props) => {
     },
   });
 
+  useEffect(() => {
+    props.clearError();
+  }, [values]);
+
   const validatePayload = (payload) => {
     const results = schema.validate(payload);
     if (!results.error) {
       return true;
     }
+
+    props.displayError(results.error.message);
 
     return false;
   };
@@ -48,12 +53,9 @@ const FormComponent = (props) => {
       read: values.read === '1' ? true : false,
     };
 
-    console.log(payload);
-
-    if (validatePayload(payload)) {
-      console.log('payload is valid');
-    } else {
-      console.log('payload is NOT valid');
+    if (!validatePayload(payload)) {
+      // props.displayError('Payload is NOT valid');
+      return false;
     }
 
     props.action(payload);

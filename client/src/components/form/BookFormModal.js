@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, Button } from 'reactstrap';
 
 const BookFormModal = () => {
   const [modal, setModal] = useState(false);
