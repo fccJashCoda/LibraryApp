@@ -24,17 +24,27 @@ const BookList = (props) => {
 
       {props.children}
 
-      {props.isLoading ? (
-        <div>
-          <Spinner />
-        </div>
-      ) : props.books.length ? (
-        searchTerm ? (
-          props.books
-            .filter((book) =>
-              book.title.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-            .map((book, i) => (
+      <div className='d-flex flex-wrap justify-content-between'>
+        {props.isLoading ? (
+          <div>
+            <Spinner />
+          </div>
+        ) : props.books.length ? (
+          searchTerm ? (
+            props.books
+              .filter((book) =>
+                book.title.toLowerCase().includes(searchTerm.toLowerCase())
+              )
+              .map((book, i) => (
+                <Book
+                  key={book._id}
+                  toggleRead={props.toggleRead}
+                  deleteBook={props.deleteBook}
+                  book={book}
+                />
+              ))
+          ) : (
+            props.books.map((book, i) => (
               <Book
                 key={book._id}
                 toggleRead={props.toggleRead}
@@ -42,21 +52,13 @@ const BookList = (props) => {
                 book={book}
               />
             ))
+          )
         ) : (
-          props.books.map((book, i) => (
-            <Book
-              key={book._id}
-              toggleRead={props.toggleRead}
-              deleteBook={props.deleteBook}
-              book={book}
-            />
-          ))
-        )
-      ) : (
-        <>
-          <p>No book in library.</p>
-        </>
-      )}
+          <>
+            <p>No book in library.</p>
+          </>
+        )}
+      </div>
     </div>
   );
 };

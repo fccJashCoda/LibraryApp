@@ -6,7 +6,6 @@ const BookFormModal = () => {
 
   const toggle = () => {
     setModal(!modal);
-    console.log('opening modal');
   };
 
   return (

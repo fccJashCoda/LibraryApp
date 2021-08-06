@@ -11,6 +11,7 @@ const schema = Joi.object({
   author: Joi.string(),
   pages: Joi.number(),
   read: Joi.boolean(),
+  isbn: Joi.string(),
 });
 
 const FormComponent = (props) => {
@@ -21,6 +22,7 @@ const FormComponent = (props) => {
       author: '',
       pages: 0,
       read: 0,
+      isbn: '11111111',
     },
   });
 
@@ -51,22 +53,20 @@ const FormComponent = (props) => {
       author: values.author || 'Unknown',
       pages: values.pages,
       read: values.read === '1' ? true : false,
+      isbn: values.isbn || 11111111,
     };
 
     if (!validatePayload(payload)) {
-      // props.displayError('Payload is NOT valid');
       return false;
     }
 
     props.action(payload);
-
-    console.log('submitting form');
   };
 
   return (
     <>
       {showing ? (
-        <Form>
+        <Form className='my-4'>
           <FormGroup className='mt-2'>
             <InputComponent title='Title' action={handleChange} />
           </FormGroup>
@@ -78,6 +78,14 @@ const FormComponent = (props) => {
               title='Pages'
               placeholder='0'
               type='number'
+              action={handleChange}
+            />
+          </FormGroup>
+          <FormGroup className='mt-2'>
+            <InputComponent
+              title='ISBN'
+              placeholder='11111111'
+              type='text'
               action={handleChange}
             />
           </FormGroup>
@@ -94,7 +102,9 @@ const FormComponent = (props) => {
           </FormGroup>
         </Form>
       ) : (
-        <Button onClick={toggle}>Add Book</Button>
+        <Button onClick={toggle} className='my-3'>
+          Add Book
+        </Button>
       )}
     </>
   );

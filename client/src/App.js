@@ -6,24 +6,6 @@ import BookList from './components/core/BookList';
 import axios from 'axios';
 import { Alert } from 'reactstrap';
 
-const mockdb = [
-  { title: 'Cats', author: 'Someone', pages: 111, read: true },
-  {
-    title: 'The last of the Meowcan',
-    author: 'Someone',
-    pages: 111,
-    read: true,
-  },
-  { title: 'The Meowtrix', author: 'Someone', pages: 111, read: true },
-  {
-    title: 'Catch treat if ou can',
-    author: 'Someone',
-    pages: 111,
-    read: true,
-  },
-  { title: 'The red dot', author: 'Someone', pages: 111, read: true },
-];
-
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
@@ -34,9 +16,9 @@ function App() {
       const {
         data: { book },
       } = await axios.post('http://localhost:5333/library/', payload);
+      console.log(book);
       setBookList([book, ...bookList]);
     } catch (error) {
-      console.log(error);
       setErrorMessage(error.message);
     }
   };
@@ -69,13 +51,9 @@ function App() {
   const deleteBook = async (id) => {
     try {
       const newBookList = bookList.filter((book) => book._id !== id);
-      const deletedBook = await axios.delete(
-        `http://localhost:5333/library/${id}`
-      );
-      console.log(deletedBook.data.message);
+      await axios.delete(`http://localhost:5333/library/${id}`);
       setBookList(newBookList);
     } catch (error) {
-      console.log(error);
       setErrorMessage(error.message);
     }
   };
@@ -84,11 +62,9 @@ function App() {
     async function loadBooks() {
       try {
         const payload = await axios.get('http://localhost:5333/library/');
-        console.log(payload.data.books);
         setBookList(payload.data.books);
       } catch (err) {
         setErrorMessage(err.message);
-        console.log(err);
       } finally {
         setIsLoading(false);
       }

@@ -7,6 +7,7 @@ const details = (req, res, next) => {
 
 const addBook = (req, res, next) => {
   try {
+    console.log(req.body);
     const book = new Book({ ...req.body });
     book.save();
     res.json({ message: 'Added a new book', book });

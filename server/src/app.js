@@ -5,6 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const library = require('./library/v1/library.router');
 require('dotenv').config();
+const update = require('./updatedb');
 
 const app = express();
 const db = process.env.MONGODB;
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use('/library', library);
+app.use('/upt', update);
 
 app.get('/', (req, res, next) => {
   res.status(200);

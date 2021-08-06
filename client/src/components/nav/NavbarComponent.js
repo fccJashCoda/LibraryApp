@@ -7,7 +7,6 @@ import {
   NavItem,
   NavLink,
   NavbarToggler,
-  NavbarText,
   Collapse,
   Form,
   FormGroup,

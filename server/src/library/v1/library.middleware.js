@@ -5,6 +5,7 @@ const validationChain = [
   body('author').notEmpty().isString(),
   body('pages').notEmpty().isNumeric(),
   body('read').isBoolean(),
+  body('isbn').notEmpty().isString(),
 ];
 
 const validate = (req, res, next) => {

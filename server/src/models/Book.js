@@ -19,6 +19,10 @@ const bookSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    isbn: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: { createdAt: 'created_at' },
